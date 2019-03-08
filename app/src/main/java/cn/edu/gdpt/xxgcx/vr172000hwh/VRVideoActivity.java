@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.vr.sdk.widgets.video.VrVideoEventListener;
 import com.google.vr.sdk.widgets.video.VrVideoView;
 
 import java.io.IOException;
@@ -39,6 +40,25 @@ public class VRVideoActivity extends AppCompatActivity {
             }
 
         }.execute();
+        mVrMainVideo.setTag(true);
+        mVrMainVideo.setEventListener(new VrVideoEventListener(){
+            @Override
+            public void onClick() {
+                super.onClick();
+                boolean isPlay=(boolean)mVrMainVideo.getTag();
+                if (isPlay) {
+                    mVrMainVideo.pauseVideo();
+                    isPlay=false;
+                }else {
+                    mVrMainVideo.playVideo();
+                    isPlay=true;
+                }
+                mVrMainVideo.setTag(isPlay);
+            }
+
+        });
+
+
     }
     //一.2 初始化函数
     private void initView() {
