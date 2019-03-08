@@ -55,9 +55,52 @@ public class VRVideoActivity extends AppCompatActivity {
                 }
                 mVrMainVideo.setTag(isPlay);
             }
+            @Override
+            public void onNewFrame() {
+                super.onNewFrame();
+                long duration=mVrMainVideo.getDuration();//视频长度，单位毫秒
+                long currentPosition=mVrMainVideo.getCurrentPosition();//视频当前位置
+                int percent=(int)(currentPosition*100f/duration+0.5f);//0-100
+                mSbMainProgress.setMax(100);
+                mSbMainProgress.setProgress(percent);
+                mTvMainProgress.setText(percent+"%");
+            }
 
+            @Override
+            public void onCompletion() {
+                super.onCompletion();
+                mSbMainProgress.setMax(100);
+                mSbMainProgress.setProgress(100);
+                mTvMainProgress.setText(100+"%");
+                mVrMainVideo.seekTo(0);//实训循环播放
+            }
+            @Override
+            public void onLoadSuccess() {
+                super.onLoadSuccess();
+                mSbMainProgress.setMax(100);
+                mSbMainProgress.setProgress(0);
+                mTvMainProgress.setText(0+"%");
+            }
         });
 
+        mSbMainProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    long duration=mVrMainVideo.getDuration();//视频长度  15000ms
+                    //progress:0-100   20->0.2  3000ms
+                    long newPosition=(long)(progress*0.01*duration);
+                    mVrMainVideo.seekTo(newPosition);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
 
     }
     //一.2 初始化函数
