@@ -5,5 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VRVideoActivity">
-
+    <com.google.vr.sdk.widgets.video.VrVideoView
+        android:id="@+id/vr_main_video"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <SeekBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sb_main_progress"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_main_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--:--"
+            android:padding="20dp"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
